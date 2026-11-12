@@ -38,6 +38,7 @@ process REGENIE_STEP2_RUN_GENE_TESTS {
     def maxAaf = params.regenie_gene_vc_max_aaf ? "--vc-maxAAF ${params.regenie_gene_vc_max_aaf}":''
     def vcMACThr = params.regenie_gene_vc_mac_thr ? "--vc-MACthr ${params.regenie_gene_vc_mac_thr}":''
     def buildMask = params.regenie_gene_build_mask ? "--build-mask ${params.regenie_gene_build_mask}":''
+    def weightsCol = params.regenie_gene_weights_col ? "--weights-col ${params.regenie_gene_weights_col}" : ''
     def writeMasks = params.regenie_write_bed_masks  ? "--write-mask" : ''
     def joint = params.regenie_gene_joint ? "--joint ${params.regenie_gene_joint}":''
     def condition_list = params.regenie_condition_list ? "--condition-list $condition_list_file" : ''
@@ -72,6 +73,7 @@ process REGENIE_STEP2_RUN_GENE_TESTS {
         $maxAaf \
         $vcMACThr \
         $buildMask \
+        $weightsCol \
         $joint \
         --out ${filename} \
         $step2_optional

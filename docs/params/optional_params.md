@@ -122,6 +122,7 @@ The following gene-based parameters are all regenie specific. Please click [here
 | `regenie_write_bed_masks`     |  - | write mask to PLINK bed format (does not work when building masks with 'sum') |
 | `regenie_gene_vc_mac_thr`     |  10 | MAC threshold below which to collapse variants in SKAT/ACAT-type tests |
 | `regenie_gene_vc_max_aaf`     |  100% | AAF upper bound to use for SKAT/ACAT-type tests |
+| `regenie_gene_weights_col`     |  - | column of the annotation file that holds the variant weights (requires REGENIE >= 4.1) |
 
 ### Interaction Tests Only
 The following interaction test parameters are all regenie specific. Please click [here](https://rgcgithub.github.io/regenie/options/#interaction-testing) to learn more about this feature.
