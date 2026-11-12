@@ -50,6 +50,7 @@ tabix -s1 -b2 -e2 -S1 rsids-v154-${rsbuild}.index.gz
 ### Static Report
 
 | Option        |Default          | Description |
+| ------------- |-----------------| -------------|
 | `plot_ylimit`     |   0 | Limit y axis in Manhattan/QQ plot for large p-values |
 | `manhattan_annotation_enabled`     |  true | Use annotation for Manhattan plot |
 
@@ -122,6 +123,7 @@ The following gene-based parameters are all regenie specific. Please click [here
 | `regenie_write_bed_masks`     |  - | write mask to PLINK bed format (does not work when building masks with 'sum') |
 | `regenie_gene_vc_mac_thr`     |  10 | MAC threshold below which to collapse variants in SKAT/ACAT-type tests |
 | `regenie_gene_vc_max_aaf`     |  100% | AAF upper bound to use for SKAT/ACAT-type tests |
+| `regenie_gene_weights_col`     |  - | column of the annotation file that holds the variant weights (requires REGENIE >= 4.1) |
 
 ### Interaction Tests Only
 The following interaction test parameters are all regenie specific. Please click [here](https://rgcgithub.github.io/regenie/options/#interaction-testing) to learn more about this feature.
@@ -131,5 +133,4 @@ The following interaction test parameters are all regenie specific. Please click
 | `regenie_rare_mac`     |  1000 | minor allele count (MAC) threshold below which to use HLM method for QTs |
 | `regenie_no_condtl`     |  false | to print out all the main effects from the interaction model |
 | `regenie_force_condtl`     |  false | to include the interacting SNP as a covariate in the marginal test |
-
 
