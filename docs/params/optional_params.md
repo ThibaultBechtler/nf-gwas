@@ -134,3 +134,4 @@ The following interaction test parameters are all regenie specific. Please click
 | `regenie_no_condtl`     |  false | to print out all the main effects from the interaction model |
 | `regenie_force_condtl`     |  false | to include the interacting SNP as a covariate in the marginal test |
 
+
