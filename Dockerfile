@@ -2,7 +2,7 @@ FROM quay.io/genepi/nf-gwas:v1.0.9
 
 # Install regenie (not as conda package available)
 WORKDIR "/opt"
-ENV REGENIE_VERSION="v4.1"
+ENV REGENIE_VERSION="v4.1.3"
 RUN rm -rf regenie && \ 
     mkdir regenie && cd regenie && \
     wget https://github.com/rgcgithub/regenie/releases/download/${REGENIE_VERSION}/regenie_${REGENIE_VERSION}.gz_x86_64_Linux.zip && \
