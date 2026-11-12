@@ -480,6 +480,11 @@
           "type": "integer",
           "description": "AAF upper bound to use for SKAT/ACAT-type tests",
           "fa_icon": "fas fa-project-diagram"
+        },
+        "regenie_gene_weights_col": {
+          "type": "integer",
+          "description": "Column of the annotation file that holds the variant weights (requires REGENIE >= 4.1)",
+          "fa_icon": "fas fa-project-diagram"
         }
       },
       "fa_icon": "fas fa-project-diagram"
