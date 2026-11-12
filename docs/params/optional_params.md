@@ -50,7 +50,6 @@ tabix -s1 -b2 -e2 -S1 rsids-v154-${rsbuild}.index.gz
 ### Static Report
 
 | Option        |Default          | Description |
-| ------------- |-----------------| -------------|
 | `plot_ylimit`     |   0 | Limit y axis in Manhattan/QQ plot for large p-values |
 | `manhattan_annotation_enabled`     |  true | Use annotation for Manhattan plot |
 
