@@ -34,6 +34,16 @@ class WorkflowMain {
         }
     }
 
+    //check weights column for gene-based tests
+    if (params.regenie_gene_weights_col != null) {
+        if (params.regenie_gene_anno == null || params.regenie_gene_setlist == null || params.regenie_gene_masks == null) {
+            Nextflow.error("Parameter regenie_gene_weights_col requires regenie_gene_anno, regenie_gene_setlist and regenie_gene_masks to be set (weights are read from the annotation file).")
+        }
+        if (!(params.regenie_gene_weights_col instanceof Integer) || params.regenie_gene_weights_col < 1) {
+            Nextflow.error("Parameter regenie_gene_weights_col must be a positive integer (1-based column of the annotation file).")
+        }
+    }
+
     //check if all interaction options are set
     if(params.regenie_run_interaction_tests && (params["regenie_interaction"] == null && params["regenie_interaction_snp"] == null) ) {
         Nextflow.error("Parameter regenie_interaction or regenie_interaction_snp must be set.")
