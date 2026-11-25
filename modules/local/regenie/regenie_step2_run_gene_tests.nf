@@ -33,12 +33,13 @@ process REGENIE_STEP2_RUN_GENE_TESTS {
     def predictions = params.regenie_skip_predictions  ? '--ignore-pred' : ""
     def refFirst = params.regenie_ref_first  ? "--ref-first" : ''
     def apply_rint = params.phenotypes_apply_rint ? "--apply-rint" : ''
-    def geneTest = params.regenie_gene_test ? "--vc-tests ${params.regenie_gene_test}":''
+    def geneTestList = params.regenie_gene_test ? params.regenie_gene_test.split(',').collect { it.trim() == 'burden' ? 'skat' : it.trim() } : []
+    def geneTest = geneTestList ? "--vc-tests ${geneTestList.join(',')}" : ''
     def aaf = params.regenie_gene_aaf ? "--aaf-bins ${params.regenie_gene_aaf}":''
     def maxAaf = params.regenie_gene_vc_max_aaf ? "--vc-maxAAF ${params.regenie_gene_vc_max_aaf}":''
     def vcMACThr = params.regenie_gene_vc_mac_thr ? "--vc-MACthr ${params.regenie_gene_vc_mac_thr}":''
     def buildMask = params.regenie_gene_build_mask ? "--build-mask ${params.regenie_gene_build_mask}":''
-    def weightsCol = params.regenie_gene_weights_col ? "--weights-col ${params.regenie_gene_weights_col}" : ''
+    def weightsCol = params.regenie_gene_weights_col != null ? "--weights-col ${params.regenie_gene_weights_col}" : ''
     def writeMasks = params.regenie_write_bed_masks  ? "--write-mask" : ''
     def joint = params.regenie_gene_joint ? "--joint ${params.regenie_gene_joint}":''
     def condition_list = params.regenie_condition_list ? "--condition-list $condition_list_file" : ''

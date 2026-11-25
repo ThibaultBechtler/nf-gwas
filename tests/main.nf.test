@@ -1053,4 +1053,135 @@ test("Should GWAS with chunking and optional step 1 param") {
     }
    }
 
+   test("Should execute gene-based test pipeline with burden alias and custom weights column") {
+
+        when {
+
+            params {
+                project                       = 'test-gene-based-burden-weights'
+                association_build             = 'hg19'
+                regenie_skip_predictions      = true
+                genotypes_association         = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.bgen"
+                regenie_sample_file           = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.sample"
+                genotypes_association_format  = 'bgen'
+                phenotypes_filename           = "$projectDir/tests/input/pipeline/phenotype_bin.txt"
+                phenotypes_binary_trait       = true
+                phenotypes_columns            = 'Y1,Y2'
+                regenie_run_gene_based_tests  = true
+                regenie_gene_anno             = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr_weights.annotations"
+                regenie_gene_setlist          = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.setlist"
+                regenie_gene_masks            = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.masks"
+                regenie_gene_test             = 'burden'
+                regenie_gene_aaf              = 0.01
+                regenie_gene_vc_max_aaf       = 100
+                regenie_gene_vc_mac_thr       = 10
+                regenie_gene_build_mask       = 'max'
+                regenie_gene_weights_col      = 4
+                rsids_filename                = "$projectDir/tests/input/pipeline/rsids.tsv.gz"
+                outdir                        = "$outputDir"
+            }
+        }
+
+        then {
+            assert workflow.success
+            assert snapshot(new File("$outputDir/results/Y1.regenie.gz"), new File("$outputDir/results/Y2.regenie.gz"), workflow.trace).match()
+        }
+
+    }
+
+   test("Should fail since regenie_gene_weights_col is below 4") {
+
+        when {
+
+            params {
+                project                       = 'test-gene-based-weights-invalid'
+                association_build             = 'hg19'
+                regenie_skip_predictions      = true
+                genotypes_association         = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.bgen"
+                regenie_sample_file           = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.sample"
+                genotypes_association_format  = 'bgen'
+                phenotypes_filename           = "$projectDir/tests/input/pipeline/phenotype_bin.txt"
+                phenotypes_binary_trait       = true
+                phenotypes_columns            = 'Y1,Y2'
+                regenie_run_gene_based_tests  = true
+                regenie_gene_anno             = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr_weights.annotations"
+                regenie_gene_setlist          = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.setlist"
+                regenie_gene_masks            = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.masks"
+                regenie_gene_test             = 'skat'
+                regenie_gene_weights_col      = 2
+                rsids_filename                = "$projectDir/tests/input/pipeline/rsids.tsv.gz"
+                outdir                        = "$outputDir"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.any { it.contains("regenie_gene_weights_col must be an integer >= 4") }
+        }
+
+    }
+
+   test("Should fail since regenie_gene_weights_col is combined with regenie_write_bed_masks") {
+
+        when {
+
+            params {
+                project                       = 'test-gene-based-weights-writemask'
+                association_build             = 'hg19'
+                regenie_skip_predictions      = true
+                genotypes_association         = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.bgen"
+                regenie_sample_file           = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.sample"
+                genotypes_association_format  = 'bgen'
+                phenotypes_filename           = "$projectDir/tests/input/pipeline/phenotype_bin.txt"
+                phenotypes_binary_trait       = true
+                phenotypes_columns            = 'Y1,Y2'
+                regenie_run_gene_based_tests  = true
+                regenie_gene_anno             = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr_weights.annotations"
+                regenie_gene_setlist          = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.setlist"
+                regenie_gene_masks            = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.masks"
+                regenie_gene_test             = 'skat'
+                regenie_gene_weights_col      = 4
+                regenie_write_bed_masks       = true
+                rsids_filename                = "$projectDir/tests/input/pipeline/rsids.tsv.gz"
+                outdir                        = "$outputDir"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.any { it.contains("regenie_gene_weights_col cannot be combined with regenie_write_bed_masks") }
+        }
+
+    }
+
+   test("Should fail since regenie_gene_test is missing for gene-based tests") {
+
+        when {
+
+            params {
+                project                       = 'test-gene-based-no-test'
+                association_build             = 'hg19'
+                regenie_skip_predictions      = true
+                genotypes_association         = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.bgen"
+                regenie_sample_file           = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.sample"
+                genotypes_association_format  = 'bgen'
+                phenotypes_filename           = "$projectDir/tests/input/pipeline/phenotype_bin.txt"
+                phenotypes_binary_trait       = true
+                phenotypes_columns            = 'Y1,Y2'
+                regenie_run_gene_based_tests  = true
+                regenie_gene_anno             = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.annotations"
+                regenie_gene_setlist          = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.setlist"
+                regenie_gene_masks            = "$projectDir/tests/input/pipeline/gene_based_tests_regenie/example_3chr.masks"
+                rsids_filename                = "$projectDir/tests/input/pipeline/rsids.tsv.gz"
+                outdir                        = "$outputDir"
+            }
+        }
+
+        then {
+            assert workflow.failed
+            assert workflow.stdout.any { it.contains("regenie_gene_test is required for gene-based testing") }
+        }
+
+    }
+
 }

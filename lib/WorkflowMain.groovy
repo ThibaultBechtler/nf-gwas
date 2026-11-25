@@ -18,7 +18,7 @@ class WorkflowMain {
 
     def requiredParamsGeneTests = [
         'project', 'phenotypes_filename', 'phenotypes_columns', 'phenotypes_binary_trait',
-        'regenie_gene_anno', 'regenie_gene_setlist','regenie_gene_masks'
+        'regenie_gene_anno', 'regenie_gene_setlist','regenie_gene_masks', 'regenie_gene_test'
     ]
 
     for (param in requiredParams) {
@@ -39,8 +39,8 @@ class WorkflowMain {
         if (params.regenie_gene_anno == null || params.regenie_gene_setlist == null || params.regenie_gene_masks == null) {
             Nextflow.error("Parameter regenie_gene_weights_col requires regenie_gene_anno, regenie_gene_setlist and regenie_gene_masks to be set (weights are read from the annotation file).")
         }
-        if (!(params.regenie_gene_weights_col instanceof Integer) || params.regenie_gene_weights_col < 1) {
-            Nextflow.error("Parameter regenie_gene_weights_col must be a positive integer (1-based column of the annotation file).")
+        if (!(params.regenie_gene_weights_col instanceof Integer) || params.regenie_gene_weights_col < 4) {
+            Nextflow.error("Parameter regenie_gene_weights_col must be an integer >= 4 (1-based column of the annotation file; columns 1-3 are variant ID, set name and annotation).")
         }
     }
 
@@ -93,6 +93,18 @@ class WorkflowMain {
 
         if (params.regenie_write_bed_masks && params.regenie_gene_build_mask == 'sum'){
             Nextflow.error("Invalid config file. The 'write-mask' option does not work when building masks with 'sum'.")
+        }
+
+        if (params.regenie_gene_weights_col != null && params.regenie_write_bed_masks){
+            Nextflow.error("Invalid config file. regenie_gene_weights_col cannot be combined with regenie_write_bed_masks (REGENIE writes empty result files with --weights-col and --write-mask).")
+        }
+
+        //Check gene-based tests
+        def validGeneTests = ['skat', 'skato', 'skato-acat', 'acatv', 'acato', 'burden']
+        for (test in params.regenie_gene_test.split(',')) {
+            if (!(test.trim() in validGeneTests)) {
+                Nextflow.error("Test ${test.trim()} not supported for gene-based testing. Supported tests: skat, skato, skato-acat, acatv, acato, burden.")
+            }
         }
 
         if(params.genotypes_association_chunk_size > 0 ) {

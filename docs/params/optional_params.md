@@ -116,13 +116,13 @@ The following gene-based parameters are all regenie specific. Please click [here
 
 | ------------- |-----------------| -------------|
 | `regenie_gene_aaf`     |  1 % | comma-separated list of AAF upper bounds to use when building masks |
-| `regenie_gene_test`     |  - | comma-separated list of SKAT/ACAT-type tests to run|
+| `regenie_gene_test`     |  - | comma-separated list of SKAT/ACAT-type tests to run (skat/skato/skato-acat/acatv/acato). The value 'burden' is mapped to 'skat' so that the per-mask burden test rows are produced (REGENIE 4.x runs no tests without --vc-tests) |
 | `regenie_gene_joint`     |  - | comma-separated list of joint tests to apply on the generated burden masks |
 | `regenie_gene_build_mask`     |  max | build masks using the maximum number of ALT alleles across sites, or the sum of ALT alleles ('sum'), or thresholding the sum to 2 ('comphet') |
 | `regenie_write_bed_masks`     |  - | write mask to PLINK bed format (does not work when building masks with 'sum') |
 | `regenie_gene_vc_mac_thr`     |  10 | MAC threshold below which to collapse variants in SKAT/ACAT-type tests |
 | `regenie_gene_vc_max_aaf`     |  100% | AAF upper bound to use for SKAT/ACAT-type tests |
-| `regenie_gene_weights_col`     |  - | column of the annotation file that holds the variant weights (requires REGENIE >= 4.1) |
+| `regenie_gene_weights_col`     |  - | column (>= 4; columns 1-3 are variant ID, set name, annotation) of the annotation file that holds the numeric, non-negative variant weights (requires REGENIE >= 4.1). Cannot be combined with `regenie_write_bed_masks` |
 
 ### Interaction Tests Only
 The following interaction test parameters are all regenie specific. Please click [here](https://rgcgithub.github.io/regenie/options/#interaction-testing) to learn more about this feature.

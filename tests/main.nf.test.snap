@@ -586,5 +586,21 @@
             "nextflow": "23.04.3"
         },
         "timestamp": "2023-12-14T16:45:50.402989"
+    },
+    "Should execute gene-based test pipeline with burden alias and custom weights column": {
+        "content": [
+            "Y1.regenie.gz:md5,a0f57668250453614209eafb4c6481f7",
+            "Y2.regenie.gz:md5,dcced54dd1df307accd54e7a2dbff9e5",
+            {
+                "tasksCount": 7,
+                "tasksFailed": 0,
+                "tasksSucceeded": 7
+            }
+        ],
+        "timestamp": "2026-11-12T16:32:13.044228747",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "25.10.4"
+        }
     }
 }

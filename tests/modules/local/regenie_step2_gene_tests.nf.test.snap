@@ -9,6 +9,42 @@
                 ]
             ]
         ],
-        "timestamp": "2023-12-15T11:14:20.549264"
+        "timestamp": "2023-12-15T11:14:20.549264",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "25.10.4"
+        }
+    },
+    "Should execute regenie step2 gene tests with custom weights column (--weights-col)": {
+        "content": [
+            [
+                "example_3chr",
+                [
+                    "example_3chr_Y1.regenie.gz:md5,7500398ea8f2e931075cac562dc71314",
+                    "example_3chr_Y2.regenie.gz:md5,c74b6fece61c8b7a3a94bacb5ffd9826"
+                ]
+            ]
+        ],
+        "timestamp": "2026-11-12T13:35:29.227271013",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "25.10.4"
+        }
+    },
+    "Should execute regenie step2 gene tests with burden alias (mapped to --vc-tests skat)": {
+        "content": [
+            [
+                "example_3chr",
+                [
+                    "example_3chr_Y1.regenie.gz:md5,96d6a0380cdf19ec5f2d95600502ef46",
+                    "example_3chr_Y2.regenie.gz:md5,38215508c78c4178ab75085c46ce020c"
+                ]
+            ]
+        ],
+        "timestamp": "2026-11-12T16:03:06.093710024",
+        "meta": {
+            "nf-test": "0.9.5",
+            "nextflow": "25.10.4"
+        }
     }
 }
